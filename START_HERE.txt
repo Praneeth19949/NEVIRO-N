@@ -1,0 +1,11 @@
+NEVIRO CLEAN V1 - START HERE
+
+1. Extract this ZIP.
+2. Create a brand-new empty GitHub repository.
+3. Upload the project files/folders to the repository root.
+4. IMPORTANT: Windows may hide the .github folder. Turn on File Explorer > View > Show > Hidden items.
+5. Make sure .github/workflows/main.yml exists in GitHub.
+   A visible backup copy is included at GITHUB_WORKFLOW_MAIN.yml.
+6. GitHub Actions will build the Android APK and AAB automatically after commit.
+
+Do not upload this project on top of the old repository. Use a new empty repository to avoid old workflow/test files.

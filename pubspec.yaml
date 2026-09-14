@@ -1,0 +1,43 @@
+name: neviro
+description: NEVIRO - fuel expense tracking and fuel price comparison.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.10.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  intl: ^0.20.2
+  http: ^1.5.0
+  xml: ^6.6.1
+  shared_preferences: ^2.5.5
+  geolocator: ^14.0.3
+  geocoding: ^5.0.0
+  flutter_map: ^8.3.2
+  latlong2: ^0.9.1
+  url_launcher: ^6.3.2
+  excel: ^4.0.6
+  path_provider: ^2.1.6
+  share_plus: ^13.3.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.4
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/neviro_icon.png
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: assets/neviro_icon.png
+  remove_alpha_ios: true
+  adaptive_icon_background: '#062F28'
+  adaptive_icon_foreground: assets/neviro_icon.png

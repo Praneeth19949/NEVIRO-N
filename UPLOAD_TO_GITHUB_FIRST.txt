@@ -1,0 +1,11 @@
+UPLOAD THE CONTENTS OF THIS FOLDER TO THE ROOT OF A NEW GITHUB REPOSITORY.
+
+Important: .github is a hidden folder on Windows. If GitHub's web uploader refuses the hidden folder, create the workflow files manually under .github/workflows using the contents included here.
+
+After upload:
+1. GitHub -> Actions
+2. Run "Build NEVIRO Android"
+3. Wait for a green build
+4. Download NEVIRO-APK
+
+For Google Play / App Store release signing, read RELEASE_SIGNING.md.

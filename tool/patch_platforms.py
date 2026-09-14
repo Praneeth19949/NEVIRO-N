@@ -29,12 +29,34 @@ def patch_android():
     if gradle_kts.exists():
         gradle = gradle_kts.read_text()
         gradle = gradle.replace('minSdk = flutter.minSdkVersion', 'minSdk = 24')
+        mlkit_dependencies = '''
+
+dependencies {
+    implementation("com.google.mlkit:text-recognition-chinese:16.0.1")
+    implementation("com.google.mlkit:text-recognition-devanagari:16.0.1")
+    implementation("com.google.mlkit:text-recognition-japanese:16.0.1")
+    implementation("com.google.mlkit:text-recognition-korean:16.0.1")
+}
+'''
+        if 'text-recognition-chinese:16.0.1' not in gradle:
+            gradle += mlkit_dependencies
         gradle_kts.write_text(gradle)
 
     gradle_groovy = ROOT / 'android' / 'app' / 'build.gradle'
     if gradle_groovy.exists():
         gradle = gradle_groovy.read_text()
         gradle = gradle.replace('minSdkVersion flutter.minSdkVersion', 'minSdkVersion 24')
+        mlkit_dependencies = '''
+
+dependencies {
+    implementation 'com.google.mlkit:text-recognition-chinese:16.0.1'
+    implementation 'com.google.mlkit:text-recognition-devanagari:16.0.1'
+    implementation 'com.google.mlkit:text-recognition-japanese:16.0.1'
+    implementation 'com.google.mlkit:text-recognition-korean:16.0.1'
+}
+'''
+        if 'text-recognition-chinese:16.0.1' not in gradle:
+            gradle += mlkit_dependencies
         gradle_groovy.write_text(gradle)
 
 

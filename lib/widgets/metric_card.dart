@@ -23,7 +23,7 @@ class MetricCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: emphasize ? kNeviroCard2 : kNeviroCard,
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: emphasize ? kNeviroGreen.withValues(alpha: 0.35) : const Color(0xFF1B4A3F)),
+        border: Border.all(color: emphasize ? kNeviroGreen.withValues(alpha: 0.35) : kNeviroBorder),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

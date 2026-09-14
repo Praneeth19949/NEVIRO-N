@@ -25,6 +25,18 @@ def patch_android():
     text = text.replace('android:label="Neviro"', 'android:label="NEVIRO"')
     manifest.write_text(text)
 
+    gradle_kts = ROOT / 'android' / 'app' / 'build.gradle.kts'
+    if gradle_kts.exists():
+        gradle = gradle_kts.read_text()
+        gradle = gradle.replace('minSdk = flutter.minSdkVersion', 'minSdk = 24')
+        gradle_kts.write_text(gradle)
+
+    gradle_groovy = ROOT / 'android' / 'app' / 'build.gradle'
+    if gradle_groovy.exists():
+        gradle = gradle_groovy.read_text()
+        gradle = gradle.replace('minSdkVersion flutter.minSdkVersion', 'minSdkVersion 24')
+        gradle_groovy.write_text(gradle)
+
 
 def patch_ios():
     plist_path = ROOT / 'ios' / 'Runner' / 'Info.plist'
@@ -34,7 +46,13 @@ def patch_ios():
         data = plistlib.load(f)
     data['CFBundleDisplayName'] = 'NEVIRO'
     data['NSLocationWhenInUseUsageDescription'] = (
-        'NEVIRO uses your location only when you ask for nearby fuel prices and directions.'
+        'NEVIRO uses your location to load nearby fuel prices when you open Fuel Prices.'
+    )
+    data['NSCameraUsageDescription'] = (
+        'NEVIRO uses the camera when you choose to scan a fuel receipt.'
+    )
+    data['NSPhotoLibraryUsageDescription'] = (
+        'NEVIRO lets you choose a fuel receipt photo to scan its fill-up details.'
     )
     with plist_path.open('wb') as f:
         plistlib.dump(data, f, sort_keys=False)

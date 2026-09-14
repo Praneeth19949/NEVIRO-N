@@ -85,7 +85,7 @@ class _ReportsPageState extends State<ReportsPage> {
           onSelectionChanged: (Set<String> selected) => setState(() => period = selected.first),
           style: ButtonStyle(
             backgroundColor: WidgetStateProperty.resolveWith<Color?>((states) => states.contains(WidgetState.selected) ? kNeviroGreen : kNeviroCard),
-            foregroundColor: WidgetStateProperty.resolveWith<Color?>((states) => states.contains(WidgetState.selected) ? kNeviroDark : Colors.white),
+            foregroundColor: WidgetStateProperty.resolveWith<Color?>((states) => states.contains(WidgetState.selected) ? Colors.white : kNeviroDark),
           ),
         ),
         const SizedBox(height: 18),
@@ -136,7 +136,7 @@ class _ReportsPageState extends State<ReportsPage> {
             height: 52,
             child: FilledButton.icon(
               onPressed: exporting ? null : _export,
-              style: FilledButton.styleFrom(backgroundColor: kNeviroGreen, foregroundColor: kNeviroDark),
+              style: FilledButton.styleFrom(backgroundColor: kNeviroGreen, foregroundColor: Colors.white),
               icon: exporting ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Icons.file_download_rounded),
               label: Text(exporting ? 'Preparing Excel...' : 'Export to Excel'),
             ),

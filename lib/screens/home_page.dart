@@ -63,7 +63,7 @@ class HomePage extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              gradient: const LinearGradient(colors: <Color>[Color(0xFF0B4B3C), Color(0xFF0B332B)]),
+              gradient: const LinearGradient(colors: <Color>[Color(0xFFE2F7E8), Color(0xFFF7FBF8)]),
               borderRadius: BorderRadius.circular(22),
               border: Border.all(color: kNeviroGreen.withValues(alpha: 0.25)),
             ),
@@ -126,7 +126,7 @@ class HomePage extends StatelessWidget {
                 ),
                 child: Row(
                   children: <Widget>[
-                    const CircleAvatar(backgroundColor: Color(0xFF124838), child: Icon(Icons.local_gas_station_rounded, color: kNeviroGreen)),
+                    const CircleAvatar(backgroundColor: kNeviroCard2, child: Icon(Icons.local_gas_station_rounded, color: kNeviroGreenDark)),
                     const SizedBox(width: 12),
                     Expanded(
                       child: Column(
@@ -151,7 +151,7 @@ class HomePage extends StatelessWidget {
                 onPressed: onAddFuel,
                 icon: const Icon(Icons.add_rounded),
                 label: const Text('Add Fuel'),
-                style: FilledButton.styleFrom(backgroundColor: kNeviroGreen, foregroundColor: kNeviroDark),
+                style: FilledButton.styleFrom(backgroundColor: kNeviroGreen, foregroundColor: Colors.white),
               ),
             ],
           ),
@@ -215,7 +215,7 @@ class _RecentTile extends StatelessWidget {
       decoration: BoxDecoration(color: kNeviroCard, borderRadius: BorderRadius.circular(16)),
       child: Row(
         children: <Widget>[
-          const CircleAvatar(backgroundColor: Color(0xFF124838), child: Icon(Icons.local_gas_station, color: kNeviroGreen, size: 20)),
+          const CircleAvatar(backgroundColor: kNeviroCard2, child: Icon(Icons.local_gas_station, color: kNeviroGreenDark, size: 20)),
           const SizedBox(width: 12),
           Expanded(
             child: Column(

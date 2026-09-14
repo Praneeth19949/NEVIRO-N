@@ -86,7 +86,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   if (mounted) setState(() {});
                 },
               ),
-              const Divider(height: 1, color: Color(0xFF17463B)),
+              const Divider(height: 1, color: kNeviroBorder),
               _SettingDropdown(
                 icon: Icons.attach_money_rounded,
                 title: 'Currency',
@@ -107,7 +107,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   if (mounted) setState(() {});
                 },
               ),
-              const Divider(height: 1, color: Color(0xFF17463B)),
+              const Divider(height: 1, color: kNeviroBorder),
               _SettingDropdown(
                 icon: Icons.straighten_rounded,
                 title: 'Distance Unit',
@@ -122,7 +122,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   if (mounted) setState(() {});
                 },
               ),
-              const Divider(height: 1, color: Color(0xFF17463B)),
+              const Divider(height: 1, color: kNeviroBorder),
               _SettingDropdown(
                 icon: Icons.eco_rounded,
                 title: 'Fuel Efficiency Unit',
@@ -151,7 +151,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 trailing: exporting ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Icons.chevron_right_rounded),
                 onTap: exporting ? null : _export,
               ),
-              const Divider(height: 1, color: Color(0xFF17463B)),
+              const Divider(height: 1, color: kNeviroBorder),
               ListTile(
                 leading: const Icon(Icons.delete_outline_rounded, color: Colors.redAccent),
                 title: const Text('Clear All Data'),
@@ -169,13 +169,13 @@ class _SettingsPageState extends State<SettingsPage> {
               ListTile(
                 leading: Icon(Icons.info_outline_rounded, color: kNeviroGreen),
                 title: Text('NEVIRO'),
-                subtitle: Text('Version 1.0.0 • Fuel tracking first', style: TextStyle(color: kNeviroMuted, fontSize: 12)),
+                subtitle: Text('Version 1.1.0 • Receipt scan + nearby fuel update', style: TextStyle(color: kNeviroMuted, fontSize: 12)),
               ),
-              Divider(height: 1, color: Color(0xFF17463B)),
+              Divider(height: 1, color: kNeviroBorder),
               ListTile(
                 leading: Icon(Icons.lock_outline_rounded, color: kNeviroGreen),
                 title: Text('Privacy'),
-                subtitle: Text('No account. Fuel records stay on this device. Location is used only when you request nearby prices.', style: TextStyle(color: kNeviroMuted, fontSize: 12)),
+                subtitle: Text('No account. Fuel records stay on this device. Location is used to load nearby fuel prices when you open Fuel Prices. Receipt text recognition runs on-device.', style: TextStyle(color: kNeviroMuted, fontSize: 12)),
               ),
             ],
           ),

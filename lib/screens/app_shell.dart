@@ -47,6 +47,7 @@ class _AppShellState extends State<AppShell> {
       FuelPricesPage(
         store: widget.store,
         profile: widget.profile,
+        active: index == 1,
         onUseForFillUp: (station) => openAddFuel(station: station),
       ),
       ReportsPage(store: widget.store, profile: widget.profile),
@@ -57,8 +58,11 @@ class _AppShellState extends State<AppShell> {
       body: SafeArea(child: IndexedStack(index: index, children: pages)),
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
-          color: Color(0xFF062821),
-          border: Border(top: BorderSide(color: Color(0xFF17463B))),
+          color: kNeviroCard,
+          border: Border(top: BorderSide(color: kNeviroBorder)),
+          boxShadow: <BoxShadow>[
+            BoxShadow(color: Color(0x14000000), blurRadius: 14, offset: Offset(0, -3)),
+          ],
         ),
         padding: const EdgeInsets.fromLTRB(8, 8, 8, 10),
         child: Row(
@@ -85,11 +89,17 @@ class _AppShellState extends State<AppShell> {
                     Container(
                       width: 54,
                       height: 54,
-                      decoration: const BoxDecoration(color: kNeviroGreen, shape: BoxShape.circle),
-                      child: const Icon(Icons.add_rounded, color: kNeviroDark, size: 32),
+                      decoration: const BoxDecoration(
+                        color: kNeviroGreen,
+                        shape: BoxShape.circle,
+                        boxShadow: <BoxShadow>[
+                          BoxShadow(color: Color(0x3318B45B), blurRadius: 10, offset: Offset(0, 4)),
+                        ],
+                      ),
+                      child: const Icon(Icons.add_rounded, color: Colors.white, size: 32),
                     ),
                     const SizedBox(height: 4),
-                    const Text('Add Fuel', style: TextStyle(fontSize: 10.5, color: Colors.white)),
+                    const Text('Add Fuel', style: TextStyle(fontSize: 10.5, color: kNeviroDark)),
                   ],
                 ),
               ),
@@ -123,7 +133,7 @@ class _NavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = selected ? kNeviroGreen : kNeviroMuted;
+    final color = selected ? kNeviroGreenDark : kNeviroMuted;
     return Expanded(
       child: InkWell(
         borderRadius: BorderRadius.circular(16),

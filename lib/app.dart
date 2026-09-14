@@ -6,11 +6,14 @@ import 'screens/app_shell.dart';
 import 'services/local_store.dart';
 import 'services/region_service.dart';
 
-const Color kNeviroDark = Color(0xFF041F1A);
-const Color kNeviroCard = Color(0xFF0B332B);
-const Color kNeviroCard2 = Color(0xFF10483C);
-const Color kNeviroGreen = Color(0xFF38E66B);
-const Color kNeviroMuted = Color(0xFF9EB8B0);
+const Color kNeviroBackground = Color(0xFFF3F7F2);
+const Color kNeviroDark = Color(0xFF163B2D);
+const Color kNeviroCard = Color(0xFFFFFFFF);
+const Color kNeviroCard2 = Color(0xFFEAF7EE);
+const Color kNeviroGreen = Color(0xFF18B45B);
+const Color kNeviroGreenDark = Color(0xFF0D8E46);
+const Color kNeviroMuted = Color(0xFF6C7F75);
+const Color kNeviroBorder = Color(0xFFDCE8E0);
 
 class NeviroApp extends StatelessWidget {
   final LocalStore store;
@@ -26,33 +29,41 @@ class NeviroApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'NEVIRO',
-          themeMode: ThemeMode.dark,
-          darkTheme: ThemeData(
+          themeMode: ThemeMode.light,
+          theme: ThemeData(
             useMaterial3: true,
-            brightness: Brightness.dark,
-            scaffoldBackgroundColor: kNeviroDark,
+            brightness: Brightness.light,
+            scaffoldBackgroundColor: kNeviroBackground,
             colorScheme: ColorScheme.fromSeed(
               seedColor: kNeviroGreen,
-              brightness: Brightness.dark,
+              brightness: Brightness.light,
               surface: kNeviroCard,
             ),
             fontFamily: 'Roboto',
+            textTheme: const TextTheme(
+              bodyMedium: TextStyle(color: kNeviroDark),
+              bodyLarge: TextStyle(color: kNeviroDark),
+              titleMedium: TextStyle(color: kNeviroDark),
+              titleLarge: TextStyle(color: kNeviroDark),
+            ),
             appBarTheme: const AppBarTheme(
-              backgroundColor: kNeviroDark,
-              foregroundColor: Colors.white,
+              backgroundColor: kNeviroBackground,
+              foregroundColor: kNeviroDark,
               elevation: 0,
               centerTitle: false,
             ),
             inputDecorationTheme: InputDecorationTheme(
               filled: true,
               fillColor: kNeviroCard,
+              hintStyle: const TextStyle(color: kNeviroMuted),
+              prefixIconColor: kNeviroGreenDark,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(16),
-                borderSide: const BorderSide(color: Color(0xFF245749)),
+                borderSide: const BorderSide(color: kNeviroBorder),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(16),
-                borderSide: const BorderSide(color: Color(0xFF245749)),
+                borderSide: const BorderSide(color: kNeviroBorder),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(16),
@@ -62,11 +73,19 @@ class NeviroApp extends StatelessWidget {
             cardTheme: CardThemeData(
               color: kNeviroCard,
               elevation: 0,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+                side: const BorderSide(color: kNeviroBorder),
+              ),
             ),
+            dividerTheme: const DividerThemeData(color: kNeviroBorder),
             snackBarTheme: const SnackBarThemeData(
-              backgroundColor: Color(0xFF123F35),
+              backgroundColor: kNeviroDark,
               contentTextStyle: TextStyle(color: Colors.white),
+            ),
+            bottomSheetTheme: const BottomSheetThemeData(
+              backgroundColor: kNeviroCard,
+              surfaceTintColor: kNeviroCard,
             ),
           ),
           home: AppShell(store: store, profile: profile),
@@ -82,7 +101,7 @@ String effectiveCurrencyCode(LocalStore store, RegionProfile profile) {
 
 String currencySymbolFor(String code) {
   const symbols = <String, String>{
-    'AUD': r'A$',
+    'AUD': r'$',
     'LKR': 'Rs.',
     'USD': r'$',
     'GBP': '£',

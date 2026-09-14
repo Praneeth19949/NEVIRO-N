@@ -5,6 +5,8 @@ import 'package:xml/xml.dart';
 import '../models/station_price.dart';
 
 class FuelWatchService {
+  static const double nearbyRadiusKm = 10.0;
+
   static const Map<String, int> products = <String, int>{
     'Unleaded 91': 1,
     'Premium 95': 2,
@@ -56,6 +58,7 @@ class FuelWatchService {
               longitude,
             ) /
             1000.0;
+        if (distanceKm > nearbyRadiusKm) continue;
       }
 
       final station = value('trading-name').isNotEmpty ? value('trading-name') : value('title');
@@ -75,7 +78,11 @@ class FuelWatchService {
       );
     }
 
-    rows.sort((StationPrice a, StationPrice b) => a.priceCentsPerLitre.compareTo(b.priceCentsPerLitre));
-    return rows.take(10).toList();
+    rows.sort((StationPrice a, StationPrice b) {
+      final priceCompare = a.priceCentsPerLitre.compareTo(b.priceCentsPerLitre);
+      if (priceCompare != 0) return priceCompare;
+      return (a.distanceKm ?? double.infinity).compareTo(b.distanceKm ?? double.infinity);
+    });
+    return rows;
   }
 }

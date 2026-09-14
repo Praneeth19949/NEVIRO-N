@@ -180,7 +180,7 @@ class _HistoryCard extends StatelessWidget {
         decoration: BoxDecoration(color: kNeviroCard, borderRadius: BorderRadius.circular(18)),
         child: Row(
           children: <Widget>[
-            const CircleAvatar(backgroundColor: Color(0xFF124838), child: Icon(Icons.local_gas_station_rounded, color: kNeviroGreen)),
+            const CircleAvatar(backgroundColor: kNeviroCard2, child: Icon(Icons.local_gas_station_rounded, color: kNeviroGreenDark)),
             const SizedBox(width: 12),
             Expanded(
               child: Column(

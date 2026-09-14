@@ -6,13 +6,17 @@ NEVIRO is a fuel tracking and fuel-price comparison application.
 
 ## Information stored on your device
 
-Fuel entries you create, including dates, fuel type, station name, price, litres, notes, and optional odometer readings, are stored locally on your device. NEVIRO does not require an account and does not upload this fuel-history database to a NEVIRO cloud account in Version 1.
+Fuel entries you create, including dates, fuel type, station name, price, litres, notes, and optional odometer readings, are stored locally on your device. NEVIRO does not require an account and does not upload this fuel-history database to a NEVIRO cloud account in Version 1.1.
+
+## Receipt scanning
+
+If you choose Scan / Upload Receipt, NEVIRO can use your camera or let you choose a receipt image from your photo library. Text recognition is performed on-device using the Google ML Kit text-recognition plugin. Detected values are used to prefill the Add Fuel form and should be checked before saving. NEVIRO does not intentionally upload receipt images to a NEVIRO server.
 
 ## Location
 
-NEVIRO may request location permission when you choose to find nearby fuel prices. Location is used to identify your nearby area and calculate distance to available fuel stations. NEVIRO does not intentionally maintain a server-side history of your precise location.
+When you open Fuel Prices in a supported region, NEVIRO may request location permission so it can identify the nearby area, calculate station distance, and filter nearby results. NEVIRO does not intentionally maintain a server-side history of your precise location.
 
-If you do not grant location permission, you can enter a suburb manually where supported and can continue using fuel tracking without location access.
+If you do not grant location permission, you can enter a suburb manually where supported and continue using fuel tracking without location access.
 
 ## External services
 

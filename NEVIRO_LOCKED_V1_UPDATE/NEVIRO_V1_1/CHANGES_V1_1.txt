@@ -1,0 +1,14 @@
+NEVIRO V1.1 — LOCKED CHANGES IMPLEMENTED
+
+1. Light premium green UI theme.
+2. Receipt scan/upload from camera or gallery.
+3. On-device OCR prefills receipt details when detected; user reviews before saving.
+4. Fuel Prices auto-load location when the Fuel Prices tab is opened.
+5. Fuel Prices refresh when returning to the tab, plus a manual refresh button.
+6. Updated status shows “Updated just now” / recent time.
+7. FuelWatch results are filtered to a fixed 10 km radius when device/station coordinates are available.
+8. Station cards show distance and cheapest result.
+9. Country/currency auto-detection improved; Australian timezone detection prevents incorrect GBP default on AU phones using a UK locale.
+10. Version updated to 1.1.0+2.
+
+IMPORTANT: Official FuelWatch RSS itself returns up to the 10 cheapest results for a suburb/town search. NEVIRO cannot honestly guarantee that this RSS feed contains every physical station within the 10 km circle; it filters all results supplied by the official RSS feed to 10 km.

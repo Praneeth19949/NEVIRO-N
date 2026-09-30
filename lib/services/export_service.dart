@@ -1,92 +1,12 @@
 import 'dart:io';
-
-import 'package:excel/excel.dart' as xl;
-import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:share_plus/share_plus.dart';
-
-import '../models/fuel_entry.dart';
-import 'fuel_math.dart';
-
-class ExportService {
-  static Future<File> createExcel({
-    required List<FuelEntry> entries,
-    required String currencyCode,
-  }) async {
-    final book = xl.Excel.createExcel();
-    final sheet = book['Fuel Records'];
-    sheet.appendRow(<xl.CellValue>[
-      xl.TextCellValue('Date'),
-      xl.TextCellValue('Fuel Type'),
-      xl.TextCellValue('Station'),
-      xl.TextCellValue('Price / Litre ($currencyCode)'),
-      xl.TextCellValue('Litres'),
-      xl.TextCellValue('Total ($currencyCode)'),
-      xl.TextCellValue('Odometer'),
-      xl.TextCellValue('Efficiency (L/100km)'),
-      xl.TextCellValue('Notes'),
-    ]);
-
-    for (final entry in entries) {
-      final efficiency = FuelMath.efficiencyLPer100Km(entry, entries);
-      sheet.appendRow(<xl.CellValue>[
-        xl.TextCellValue(DateFormat('yyyy-MM-dd').format(entry.date)),
-        xl.TextCellValue(entry.fuelType),
-        xl.TextCellValue(entry.station),
-        xl.DoubleCellValue(entry.pricePerLitre),
-        xl.DoubleCellValue(entry.litres),
-        xl.DoubleCellValue(entry.total),
-        entry.odometer == null ? xl.TextCellValue('') : xl.DoubleCellValue(entry.odometer!),
-        efficiency == null ? xl.TextCellValue('') : xl.DoubleCellValue(efficiency),
-        xl.TextCellValue(entry.notes),
-      ]);
-    }
-
-    final summary = book['Summary'];
-    summary.appendRow(<xl.CellValue>[
-      xl.TextCellValue('Metric'),
-      xl.TextCellValue('Value'),
-    ]);
-    summary.appendRow(<xl.CellValue>[
-      xl.TextCellValue('Total Spend ($currencyCode)'),
-      xl.DoubleCellValue(FuelMath.totalSpend(entries)),
-    ]);
-    summary.appendRow(<xl.CellValue>[
-      xl.TextCellValue('Total Litres'),
-      xl.DoubleCellValue(FuelMath.totalLitres(entries)),
-    ]);
-    summary.appendRow(<xl.CellValue>[
-      xl.TextCellValue('Average Price / Litre ($currencyCode)'),
-      xl.DoubleCellValue(FuelMath.averagePricePerLitre(entries)),
-    ]);
-    summary.appendRow(<xl.CellValue>[
-      xl.TextCellValue('Measured Distance (km)'),
-      xl.DoubleCellValue(FuelMath.totalMeasuredDistance(entries)),
-    ]);
-    final avgEfficiency = FuelMath.averageEfficiencyLPer100Km(entries);
-    summary.appendRow(<xl.CellValue>[
-      xl.TextCellValue('Average Efficiency (L/100km)'),
-      avgEfficiency == null ? xl.TextCellValue('') : xl.DoubleCellValue(avgEfficiency),
-    ]);
-
-    final bytes = book.save();
-    if (bytes == null) throw Exception('Could not create Excel file.');
-    final dir = await getTemporaryDirectory();
-    final file = File('${dir.path}/NEVIRO_${DateFormat('yyyyMMdd_HHmm').format(DateTime.now())}.xlsx');
-    await file.writeAsBytes(bytes, flush: true);
-    return file;
-  }
-
-  static Future<void> shareExcel({
-    required List<FuelEntry> entries,
-    required String currencyCode,
-  }) async {
-    final file = await createExcel(entries: entries, currencyCode: currencyCode);
-    await SharePlus.instance.share(
-      ShareParams(
-        text: 'NEVIRO fuel records',
-        files: <XFile>[XFile(file.path)],
-      ),
-    );
-  }
-}
+import 'package:excel/excel.dart' as xl;import 'package:intl/intl.dart';import 'package:path_provider/path_provider.dart';import 'package:share_plus/share_plus.dart';
+import '../models/fuel_entry.dart';import '../models/money_transaction.dart';import 'fuel_math.dart';
+class ExportService{
+ static Future<File> createExcel({required List<FuelEntry> entries,required String currencyCode,List<MoneyTransaction> transactions=const []})async{final book=xl.Excel.createExcel();
+  final all=book['All Transactions'];all.appendRow([xl.TextCellValue('Date'),xl.TextCellValue('Type'),xl.TextCellValue('Category'),xl.TextCellValue('Description'),xl.TextCellValue('Amount ($currencyCode)'),xl.TextCellValue('Notes')]);for(final t in transactions){all.appendRow([xl.TextCellValue(DateFormat('yyyy-MM-dd').format(t.date)),xl.TextCellValue(t.type.name),xl.TextCellValue(t.category),xl.TextCellValue(t.description),xl.DoubleCellValue(t.amount),xl.TextCellValue(t.notes)]);}
+  final exp=book['Expenses'];exp.appendRow([xl.TextCellValue('Date'),xl.TextCellValue('Category'),xl.TextCellValue('Description'),xl.TextCellValue('Amount ($currencyCode)'),xl.TextCellValue('Notes')]);for(final t in transactions.where((x)=>x.type==MoneyTransactionType.expense)){exp.appendRow([xl.TextCellValue(DateFormat('yyyy-MM-dd').format(t.date)),xl.TextCellValue(t.category),xl.TextCellValue(t.description),xl.DoubleCellValue(t.amount),xl.TextCellValue(t.notes)]);}
+  final inc=book['Income'];inc.appendRow([xl.TextCellValue('Date'),xl.TextCellValue('Category'),xl.TextCellValue('Description'),xl.TextCellValue('Amount ($currencyCode)')]);for(final t in transactions.where((x)=>x.type==MoneyTransactionType.income)){inc.appendRow([xl.TextCellValue(DateFormat('yyyy-MM-dd').format(t.date)),xl.TextCellValue(t.category),xl.TextCellValue(t.description),xl.DoubleCellValue(t.amount)]);}
+  final fuel=book['Fuel Records'];fuel.appendRow([xl.TextCellValue('Date'),xl.TextCellValue('Fuel Type'),xl.TextCellValue('Station'),xl.TextCellValue('Price / Litre ($currencyCode)'),xl.TextCellValue('Litres'),xl.TextCellValue('Total ($currencyCode)'),xl.TextCellValue('Odometer'),xl.TextCellValue('Efficiency (L/100km)'),xl.TextCellValue('Notes')]);for(final e in entries){final ef=FuelMath.efficiencyLPer100Km(e,entries);fuel.appendRow([xl.TextCellValue(DateFormat('yyyy-MM-dd').format(e.date)),xl.TextCellValue(e.fuelType),xl.TextCellValue(e.station),xl.DoubleCellValue(e.pricePerLitre),xl.DoubleCellValue(e.litres),xl.DoubleCellValue(e.total),e.odometer==null?xl.TextCellValue(''):xl.DoubleCellValue(e.odometer!),ef==null?xl.TextCellValue(''):xl.DoubleCellValue(ef),xl.TextCellValue(e.notes)]);}
+  final summary=book['Summary'];final income=transactions.where((x)=>x.type==MoneyTransactionType.income).fold(0.0,(s,x)=>s+x.amount);final expenses=transactions.where((x)=>x.type==MoneyTransactionType.expense).fold(0.0,(s,x)=>s+x.amount);summary.appendRow([xl.TextCellValue('Metric'),xl.TextCellValue('Value')]);summary.appendRow([xl.TextCellValue('Total Income ($currencyCode)'),xl.DoubleCellValue(income)]);summary.appendRow([xl.TextCellValue('Total Expenses ($currencyCode)'),xl.DoubleCellValue(expenses)]);summary.appendRow([xl.TextCellValue('Balance ($currencyCode)'),xl.DoubleCellValue(income-expenses)]);summary.appendRow([xl.TextCellValue('Fuel Litres'),xl.DoubleCellValue(FuelMath.totalLitres(entries))]);
+  final bytes=book.save();if(bytes==null)throw Exception('Could not create Excel file.');final dir=await getTemporaryDirectory();final file=File('${dir.path}/NEVIRO_${DateFormat('yyyyMMdd_HHmm').format(DateTime.now())}.xlsx');await file.writeAsBytes(bytes,flush:true);return file;}
+ static Future<void> shareExcel({required List<FuelEntry> entries,required String currencyCode,List<MoneyTransaction> transactions=const []})async{final file=await createExcel(entries:entries,currencyCode:currencyCode,transactions:transactions);await SharePlus.instance.share(ShareParams(text:'NEVIRO Money • Budget • Fuel report',files:[XFile(file.path)]));}}

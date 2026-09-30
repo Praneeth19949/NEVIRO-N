@@ -26,6 +26,7 @@ class _SettingsPageState extends State<SettingsPage> {
       await ExportService.shareExcel(
         entries: widget.store.entries,
         currencyCode: effectiveCurrencyCode(widget.store, profile),
+        transactions: widget.store.transactions,
       );
     } catch (_) {
       if (mounted) {
@@ -76,10 +77,10 @@ class _SettingsPageState extends State<SettingsPage> {
                   MapEntry<String, String>('AUTO', 'Automatic'),
                   MapEntry<String, String>('AU', 'Australia'),
                   MapEntry<String, String>('LK', 'Sri Lanka'),
-                  MapEntry<String, String>('US', 'United States'),
-                  MapEntry<String, String>('GB', 'United Kingdom'),
+                  MapEntry<String, String>('IN', 'India'),
                   MapEntry<String, String>('NZ', 'New Zealand'),
-                  MapEntry<String, String>('CA', 'Canada'),
+                  MapEntry<String, String>('NP', 'Nepal'),
+                  MapEntry<String, String>('SG', 'Singapore'),
                 ],
                 onChanged: (value) async {
                   if (value != null) await widget.store.setRegionOverride(value);
@@ -96,11 +97,10 @@ class _SettingsPageState extends State<SettingsPage> {
                   MapEntry<String, String>('AUTO', 'Automatic'),
                   MapEntry<String, String>('AUD', 'AUD - Australian Dollar'),
                   MapEntry<String, String>('LKR', 'LKR - Sri Lankan Rupee'),
-                  MapEntry<String, String>('USD', 'USD - US Dollar'),
-                  MapEntry<String, String>('GBP', 'GBP - British Pound'),
+                  MapEntry<String, String>('INR', 'INR - Indian Rupee'),
                   MapEntry<String, String>('NZD', 'NZD - New Zealand Dollar'),
-                  MapEntry<String, String>('CAD', 'CAD - Canadian Dollar'),
-                  MapEntry<String, String>('EUR', 'EUR - Euro'),
+                  MapEntry<String, String>('NPR', 'NPR - Nepalese Rupee'),
+                  MapEntry<String, String>('SGD', 'SGD - Singapore Dollar'),
                 ],
                 onChanged: (value) async {
                   await widget.store.setCurrencyOverride(value == 'AUTO' ? null : value);
@@ -146,7 +146,7 @@ class _SettingsPageState extends State<SettingsPage> {
             children: <Widget>[
               ListTile(
                 leading: const Icon(Icons.file_download_rounded, color: kNeviroGreen),
-                title: const Text('Export to Excel'),
+                title: const Text('Export Full Report'),
                 subtitle: const Text('Create a backup/shareable spreadsheet', style: TextStyle(color: kNeviroMuted, fontSize: 12)),
                 trailing: exporting ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Icons.chevron_right_rounded),
                 onTap: exporting ? null : _export,

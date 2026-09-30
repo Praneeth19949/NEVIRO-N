@@ -3,15 +3,16 @@ import 'package:intl/intl.dart';
 
 import 'models/region_profile.dart';
 import 'screens/app_shell.dart';
+import 'screens/setup_page.dart';
 import 'services/local_store.dart';
 import 'services/region_service.dart';
 
-const Color kNeviroBackground = Color(0xFFF3F7F2);
-const Color kNeviroDark = Color(0xFF163B2D);
+const Color kNeviroBackground = Color(0xFFF5F8FB);
+const Color kNeviroDark = Color(0xFF102C4C);
 const Color kNeviroCard = Color(0xFFFFFFFF);
-const Color kNeviroCard2 = Color(0xFFEAF7EE);
-const Color kNeviroGreen = Color(0xFF18B45B);
-const Color kNeviroGreenDark = Color(0xFF0D8E46);
+const Color kNeviroCard2 = Color(0xFFE9F7F3);
+const Color kNeviroGreen = Color(0xFF20B486);
+const Color kNeviroGreenDark = Color(0xFF0C8F74);
 const Color kNeviroMuted = Color(0xFF6C7F75);
 const Color kNeviroBorder = Color(0xFFDCE8E0);
 
@@ -88,7 +89,7 @@ class NeviroApp extends StatelessWidget {
               surfaceTintColor: kNeviroCard,
             ),
           ),
-          home: AppShell(store: store, profile: profile),
+          home: store.setupComplete ? AppShell(store: store, profile: profile) : SetupPage(store: store),
         );
       },
     );
@@ -107,6 +108,9 @@ String currencySymbolFor(String code) {
     'GBP': '£',
     'NZD': r'NZ$',
     'CAD': r'C$',
+    'INR': '₹',
+    'NPR': 'रू',
+    'SGD': r'S$',
     'EUR': '€',
   };
   return symbols[code] ?? code;

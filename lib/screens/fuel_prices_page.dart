@@ -149,7 +149,7 @@ class _FuelPricesPageState extends State<FuelPricesPage> {
         if (rows.isEmpty) error = 'No FuelWatch prices were found for that area and fuel type.';
       });
       if (rows.isNotEmpty) {
-        await widget.store.cacheCheapest(station: rows.first, area: suburb, updated: updated);
+        await widget.store.cacheCheapest(station: rows.first, area: suburb);
       }
     } catch (_) {
       setState(() => error = 'FuelWatch could not be loaded. Check your internet connection and try again.');
@@ -211,7 +211,7 @@ class _FuelPricesPageState extends State<FuelPricesPage> {
         const Text('Fuel Prices', style: TextStyle(fontSize: 28, fontWeight: FontWeight.w900)),
         const SizedBox(height: 4),
         Text(
-          isSriLanka ? 'Latest official national fuel prices' : 'FuelWatch prices within 10 km of your location',
+          isSriLanka ? 'Latest official national fuel prices' : (isAustralia ? 'FuelWatch prices within 20 km of your location' : 'Fuel tracking with free verified data only'),
           style: const TextStyle(color: kNeviroMuted),
         ),
         const SizedBox(height: 18),
@@ -243,7 +243,7 @@ class _FuelPricesPageState extends State<FuelPricesPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(detectedArea.isEmpty ? 'Western Australia' : '$detectedArea${detectedState.isEmpty ? '' : ', WA'}', style: const TextStyle(fontWeight: FontWeight.w800)),
-                    Text(detectedArea.isEmpty ? 'Location loads automatically' : 'Showing FuelWatch results within 10 km', style: const TextStyle(color: kNeviroMuted, fontSize: 12)),
+                    Text(detectedArea.isEmpty ? 'Location loads automatically' : 'Showing FuelWatch results within 20 km', style: const TextStyle(color: kNeviroMuted, fontSize: 12)),
                   ],
                 ),
               ),
@@ -317,7 +317,7 @@ class _FuelPricesPageState extends State<FuelPricesPage> {
           const SizedBox(height: 16),
           Row(
             children: <Widget>[
-              const Expanded(child: Text('Stations within 10 km', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900))),
+              const Expanded(child: Text('Stations within 20 km', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900))),
               if (lastUpdated != null) Text(_timeText(lastUpdated!), style: const TextStyle(color: kNeviroMuted, fontSize: 11)),
             ],
           ),
@@ -331,7 +331,7 @@ class _FuelPricesPageState extends State<FuelPricesPage> {
           const SizedBox(height: 10),
           const _InfoBox(
             icon: Icons.verified_rounded,
-            text: 'Prices are sourced from the official FuelWatch RSS feed and filtered to 10 km when location coordinates are available. FuelWatch RSS supplies up to the 10 cheapest results for the searched area.',
+            text: 'Prices are sourced from the official FuelWatch RSS feed and filtered to 20 km when location coordinates are available. FuelWatch RSS supplies up to the 10 cheapest results for the searched area.',
           ),
         ],
       ],

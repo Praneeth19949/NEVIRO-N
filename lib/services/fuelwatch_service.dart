@@ -5,7 +5,7 @@ import 'package:xml/xml.dart';
 import '../models/station_price.dart';
 
 class FuelWatchService {
-  static const double nearbyRadiusKm = 10.0;
+  static const double nearbyRadiusKm = 20.0;
 
   static const Map<String, int> products = <String, int>{
     'Unleaded 91': 1,

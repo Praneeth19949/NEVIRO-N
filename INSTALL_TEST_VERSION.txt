@@ -1,0 +1,1 @@
+NEVIRO Test: separate Android applicationId com.neviro.neviro.test. Original NEVIRO stays installed with its local data. Test app has separate storage; Excel backup is not automatically imported. Upload root contents to GitHub and run Actions. This ZIP contains source, not a built APK.

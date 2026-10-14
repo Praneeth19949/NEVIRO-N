@@ -24,11 +24,16 @@ def patch_android():
             text = text[:insert_at] + '\n    ' + permission + text[insert_at:]
     text = text.replace('android:label="neviro"', 'android:label="NEVIRO"')
     text = text.replace('android:label="Neviro"', 'android:label="NEVIRO"')
+    text = text.replace('android:label="NEVIRO"', 'android:label="NEVIRO Test"')
     manifest.write_text(text)
 
     gradle_kts = ROOT / 'android' / 'app' / 'build.gradle.kts'
     if gradle_kts.exists():
         gradle = gradle_kts.read_text()
+        # Distinct Android application ID: installs alongside the original NEVIRO.
+        gradle = gradle.replace('applicationId = "com.neviro.neviro"', 'applicationId = "com.neviro.neviro.test"')
+        if 'applicationId = "com.neviro.neviro.test"' not in gradle:
+            raise RuntimeError('Expected generated applicationId was not found; refusing unsafe build')
         gradle = gradle.replace('minSdk = flutter.minSdkVersion', 'minSdk = 24')
         mlkit_dependencies = '''
 
@@ -46,6 +51,9 @@ dependencies {
     gradle_groovy = ROOT / 'android' / 'app' / 'build.gradle'
     if gradle_groovy.exists():
         gradle = gradle_groovy.read_text()
+        gradle = gradle.replace('applicationId "com.neviro.neviro"', 'applicationId "com.neviro.neviro.test"')
+        if 'applicationId "com.neviro.neviro.test"' not in gradle:
+            raise RuntimeError('Expected generated applicationId was not found; refusing unsafe build')
         gradle = gradle.replace('minSdkVersion flutter.minSdkVersion', 'minSdkVersion 24')
         mlkit_dependencies = '''
 
